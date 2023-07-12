@@ -27,7 +27,10 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<div class="flex justify-center">
+<div class={
+	'flex justify-center '
+	+ ($variablesCount >= 5 ? 'scale-50 sm:scale-100' : '')
+}>
 	<div class="flex flex-col -ml-10">
 		<div class="flex text-gray-600 text-md font-medium">
 			<div class="relative w-12 h-12">
