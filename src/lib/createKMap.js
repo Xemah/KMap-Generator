@@ -13,7 +13,7 @@ const createKMap = (variables, form, terms) => {
 	const numRows = rowVarsCombinations.length;
 	const numCols = colVarsCombinations.length;
 
-	let index = 0;
+	let term = 0;
 
 	for (let i = 0; i < numRows; i++) {
 		kMapArr[i] = [];
@@ -23,18 +23,29 @@ const createKMap = (variables, form, terms) => {
 				+ (form === 'SOP' ? ' ' : ' + ')
 				+ rowVarsCombinations[i].key;
 
-			const term = colVarsCombinations[j].term + rowVarsCombinations[i].term;
+			const binary = colVarsCombinations[j].binary
+				+ rowVarsCombinations[i].binary;
+
+			const vars = {
+				...colVarsCombinations[j].vars,
+				...rowVarsCombinations[i].vars,
+			};
+
+			const value = terms.includes(term)
+				? (form === 'SOP' ? 1 : 0)
+				: (form === 'SOP' ? 0 : 1);
 
 			kMapArr[i][j] = {
-				index,
-				key,
 				term,
-				value: terms.includes(term) ? (form === 'SOP' ? 1 : 0) : (form === 'SOP' ? 0 : 1),
+				key,
+				binary,
+				value,
+				vars,
 				colVars: colVarsCombinations[j].vars,
 				rowVars: rowVarsCombinations[i].vars,
 			};
 
-			index++;
+			term++;
 		}
 	}
 
@@ -45,10 +56,11 @@ const createKMap = (variables, form, terms) => {
 	kMapArr = fixPositions(kMapArr);
 
 	const kMap = {
-		rowVars,
+		variables,
 		colVars,
-		rowVarsCombinations,
+		rowVars,
 		colVarsCombinations,
+		rowVarsCombinations,
 		arr: kMapArr,
 	};
 

@@ -15,12 +15,12 @@ const createCombinations = (variables, form) => {
 			.map(([v, val]) => v + (val === 0 ? '\'' : ''))
 			.join(form === 'SOP' ? ' ' : ' + ');
 
-		const term = Object.values(vars)
+		const binary = Object.values(vars)
 			.join('');
 
 		combinations.push({
 			key,
-			term,
+			binary,
 			vars,
 		});
 	}

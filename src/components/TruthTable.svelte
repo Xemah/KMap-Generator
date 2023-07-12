@@ -1,5 +1,5 @@
 <script>
-	import { variablesCount, hoveredTerm, terms, form } from '@/lib/stores';
+	import { variablesCount, hoveredKey, terms, form, kMap } from '@/lib/stores';
 	import createTruthTable from '@/lib/createTruthTable';
 
 	let truthTable = [];
@@ -8,7 +8,8 @@
 		$form;
 
 		const variables = ['A', 'B', 'C', 'D', 'E'].slice(0, $variablesCount);
-		truthTable = createTruthTable(variables, $terms, $form);
+		truthTable = createTruthTable($kMap, $form);
+		console.log(truthTable);
 	}
 </script>
 
@@ -19,7 +20,7 @@
 		Truth Table
 	</div>
 	<div class="flex border-b border-gray-700 text-gray-300 text-lg font-bold text-center">
-		{#each Object.keys(truthTable[0].vars) as variable}
+		{#each Object.keys(truthTable[0]?.vars || {}) as variable}
 			<div class="flex-1 py-2 border-r last:border-r-0 border-gray-700">
 				{variable}
 			</div>
@@ -32,7 +33,7 @@
 		<div
 			class={
 				'flex border-b last:border-b-0 border-gray-700 text-gray-400 text-lg font-regular text-center select-none cursor-pointer'
-				+ ($hoveredTerm === term ? ' bg-white/10' : '')
+				+ ($hoveredKey === key ? ' bg-white/10' : '')
 			}
 			title={key}
 			on:click={() => {
@@ -42,8 +43,8 @@
 					$terms = [...$terms, term];
 				}
 			}}
-			on:mouseenter={() => $hoveredTerm = term}
-			on:mouseleave={() => $hoveredTerm = null}
+			on:mouseenter={() => $hoveredKey = key}
+			on:mouseleave={() => $hoveredKey = null}
 		>
 			{#each Object.values(vars) as value}
 				<div class="flex-1 py-2 border-r last:border-r-0 border-gray-700">

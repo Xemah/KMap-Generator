@@ -22,7 +22,7 @@ const createGroups = (kMap, form) => {
 					continue;
 				}
 
-				if (groups.some((g) => g.some((e) => e.element.index === kMapArr[i][j].index))) {
+				if (groups.some((g) => g.some((e) => e.element.term === kMapArr[i][j].term))) {
 					continue;
 				}
 

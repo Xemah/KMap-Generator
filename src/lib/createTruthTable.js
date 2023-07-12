@@ -1,17 +1,28 @@
 import createCombinations from './createCombinations';
 
-const createTruthTable = (variables, terms, form) => {
-	const truthTable = [];
+const createTruthTable = (kMap, form) => {
+	if (!kMap) {
+		return [];
+	}
 
-	const combinations = createCombinations(variables, form);
+	const truthTable = [];
+	const combinations = createCombinations(kMap.variables, form);
 
 	combinations.forEach((combination) => {
-		truthTable.push({
-			key: combination.key,
-			term: combination.term,
-			vars: combination.vars,
-			value: terms.includes(combination.term) ? (form === 'SOP' ? 1 : 0) : (form === 'SOP' ? 0 : 1),
+		let element = null;
+
+		kMap.arr.forEach((row) => {
+			if (element) return;
+
+			row.forEach((el) => {
+				if (el.binary === combination.binary) {
+					element = el;
+					return;
+				}
+			});
 		});
+
+		truthTable.push(element);
 	});
 
 	return truthTable;
