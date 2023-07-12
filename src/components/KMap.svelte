@@ -8,19 +8,17 @@
 	let equation = '';
 
 	$: {
-		$form;
-
 		const variables = ['A', 'B', 'C', 'D', 'E', 'F'].slice(0, $variablesCount);
 		$kMap = createKMap(variables, $form, $terms);
 
 		groups = createGroups($kMap, $form);
+		equation = createEquation(groups, $form);
+
 		groups = groups.map((group, i) => ({
 			number: i + 1,
 			color: 'hsla(' + 360 / (i + 1) + ', 50%, 50%, 0.25)',
 			elements: group,
 		}));
-
-		equation = createEquation(groups, $form);
 	}
 </script>
 

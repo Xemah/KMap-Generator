@@ -6,15 +6,15 @@ const createEquation = (groups, form) => {
 			return '0';
 		}
 
-		groups.forEach((group) => {
+		groups.forEach((elements) => {
 			let colEquationArr = [];
 			let rowEquationArr = [];
 
-			const colVars = Object.keys(group.elements[0].colVars);
+			const colVars = Object.keys(elements[0].colVars);
 			colVars.forEach((v) => {
-				const val = group.elements[0].colVars[v];
+				const val = elements[0].colVars[v];
 
-				if (group.elements.every((el) => el.colVars[v] === val)) {
+				if (elements.every((el) => el.colVars[v] === val)) {
 					if (form === 'SOP') {
 						colEquationArr.push(v + (val === 0 ? '\'' : ''));
 					} else {
@@ -23,11 +23,11 @@ const createEquation = (groups, form) => {
 				}
 			});
 
-			const rowVars = Object.keys(group.elements[0].rowVars);
+			const rowVars = Object.keys(elements[0].rowVars);
 			rowVars.forEach((v) => {
-				const val = group.elements[0].rowVars[v];
+				const val = elements[0].rowVars[v];
 
-				if (group.elements.every((el) => el.rowVars[v] === val)) {
+				if (elements.every((el) => el.rowVars[v] === val)) {
 					if (form === 'SOP') {
 						rowEquationArr.push(v + (val === 0 ? '\'' : ''));
 					} else {
