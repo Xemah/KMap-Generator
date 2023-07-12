@@ -43,8 +43,12 @@ const createGroups = (kMap, form) => {
 							if ([2, 3].every((n) => j + n < numCols && kMapArr[i][j + n].value === desiredValue)) {
 								[2, 3].forEach((n) => currentGroup.push({ row: i, col: j + n, element: kMapArr[i][j + n] }));
 
-								if ([4, 5, 6, 7].every((n) => j + n < numCols && kMapArr[i][j + n].value === desiredValue)) {
-									[4, 5, 6, 7].forEach((n) => currentGroup.push({ row: i, col: j + n, element: kMapArr[i][j + n] }));
+								if (variablesCount >= 4) {
+									if ([4, 5, 6, 7].every((n) => j + n < numCols && kMapArr[i][j + n].value === desiredValue)) {
+										[4, 5, 6, 7].forEach((n) => {
+											currentGroup.push({ row: i, col: j + n, element: kMapArr[i][j + n] });
+										});
+									}
 								}
 							}
 						}
@@ -59,10 +63,12 @@ const createGroups = (kMap, form) => {
 									currentGroup.push({ row: i, col: j - n, element: kMapArr[i][j - n] });
 								});
 
-								if ([4, 5, 6, 7].every((n) => j - n >= 0 && kMapArr[i][j - n].value === desiredValue)) {
-									[4, 5, 6, 7].forEach((n) => {
-										currentGroup.push({ row: i, col: j - n, element: kMapArr[i][j - n] });
-									});
+								if (variablesCount >= 4) {
+									if ([4, 5, 6, 7].every((n) => j - n >= 0 && kMapArr[i][j - n].value === desiredValue)) {
+										[4, 5, 6, 7].forEach((n) => {
+											currentGroup.push({ row: i, col: j - n, element: kMapArr[i][j - n] });
+										});
+									}
 								}
 							}
 						}
@@ -84,7 +90,7 @@ const createGroups = (kMap, form) => {
 							currentGroup.push({ row: i + 1, col: col, element: kMapArr[i + 1][col] });
 						});
 
-						if (variablesCount >= 4) {
+						if (variablesCount >= 3) {
 							if ([2, 3].every((n) => i + n < numRows && rowElements.every(({ col }) => kMapArr[i + n][col].value === desiredValue))) {
 								[2, 3].forEach((n) => {
 									rowElements.forEach(({ col }) => {
@@ -111,7 +117,7 @@ const createGroups = (kMap, form) => {
 							});
 						}
 
-						if (variablesCount >= 4) {
+						if (variablesCount >= 3) {
 							if ([2, 3].every((n) => i - n >= 0 && rowElements.every(({ col }) => kMapArr[i - n][col].value === desiredValue))) {
 								rowElements.forEach(({ col }) => {
 									[2, 3].forEach((n) => {
@@ -124,16 +130,20 @@ const createGroups = (kMap, form) => {
 				}
 
 				let currentElements = [...currentGroup];
-				if (variablesCount >= 3) {
+
+				if (variablesCount >= 3 && currentElements.some((el) => (
+					(el.col === 0 && el.row === 0)
+					|| (el.col === 0 && el.row === numRows - 1)
+					|| (el.col === numCols - 1 && el.row === 0)
+					|| (el.col === numCols - 1 && el.row === numRows - 1)
+				))) {
 					if (currentElements.every(({ row, col }) => kMapArr[row][numCols - 1 - col].value === desiredValue)) {
 						currentElements.forEach(({ row, col }) => {
 							currentGroup.push({ row: row, col: numCols - 1 - col, element: kMapArr[row][numCols - 1 - col]});
 						});
 					}
-				}
 
-				currentElements = [...currentGroup];
-				if (variablesCount >= 4) {
+					currentElements = [...currentGroup];
 					if (currentElements.every(({ row, col }) => kMapArr[numRows - 1 - row][col].value === desiredValue)) {
 						currentElements.forEach(({ row, col }) => {
 							currentGroup.push({ row: numRows - 1 - row, col: col, element: kMapArr[numRows - 1 - row][col]});

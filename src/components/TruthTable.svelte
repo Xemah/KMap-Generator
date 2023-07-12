@@ -1,16 +1,9 @@
 <script>
-	import { variablesCount, hoveredKey, terms, form, kMap } from '@/lib/stores';
+	import { hoveredKey, terms, form, kMap } from '@/lib/stores';
 	import createTruthTable from '@/lib/createTruthTable';
 
 	let truthTable = [];
-
-	$: {
-		$form;
-
-		const variables = ['A', 'B', 'C', 'D', 'E'].slice(0, $variablesCount);
-		truthTable = createTruthTable($kMap, $form);
-		console.log(truthTable);
-	}
+	$: truthTable = createTruthTable($kMap, $form);
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
