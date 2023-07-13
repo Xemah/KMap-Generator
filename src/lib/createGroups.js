@@ -156,7 +156,21 @@ const createGroups = (kMap, form) => {
 		}
 	}
 
-	return groups.map((group) => group.map((g) => g.element));
+	const finalGroups = [];
+
+	groups.forEach((group, i) => {
+		finalGroups[i] = [];
+
+		group.forEach(({ element }) => {
+			if (!finalGroups[i].some((el) => el.term === element.term)) {
+				finalGroups[i].push(element);
+			}
+		});
+
+		finalGroups[i].sort((a, b) => a.term - b.term);
+	});
+
+	return finalGroups;
 };
 
 export default createGroups;
