@@ -1,5 +1,5 @@
 <script>
-	import { form, terms, variablesCount, hoveredKey, kMap } from '@/lib/stores';
+	import { form, terms, termsType, variablesCount, hoveredKey, kMap } from '@/lib/stores';
 	import createKMap from '@/lib/createKMap';
 	import createGroups from '@/lib/createGroups';
 	import createEquation from '@/lib/createEquation';
@@ -9,7 +9,7 @@
 
 	$: {
 		const variables = ['A', 'B', 'C', 'D', 'E', 'F'].slice(0, $variablesCount);
-		$kMap = createKMap(variables, $form, $terms);
+		$kMap = createKMap(variables, $form, $terms, $termsType);
 
 		groups = createGroups($kMap, $form);
 		equation = createEquation(groups, $form);

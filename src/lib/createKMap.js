@@ -1,6 +1,6 @@
 import createCombinations from './createCombinations';
 
-const createKMap = (variables, form, terms) => {
+const createKMap = (variables, form, terms, termsType) => {
 	let kMapArr = [];
 
 	const variablesCount = variables.length;
@@ -32,8 +32,8 @@ const createKMap = (variables, form, terms) => {
 			};
 
 			const value = terms.includes(term)
-				? (form === 'SOP' ? 1 : 0)
-				: (form === 'SOP' ? 0 : 1);
+				? (termsType === 'MIN' ? 1 : 0)
+				: (termsType === 'MIN' ? 0 : 1);
 
 			kMapArr[i][j] = {
 				term,

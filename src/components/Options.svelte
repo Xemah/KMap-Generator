@@ -1,5 +1,5 @@
 <script>
-	import { variablesCount, terms, form } from '@/lib/stores.js';
+	import { variablesCount, terms, termsType, form } from '@/lib/stores.js';
 
 	const possibleVariablesCount = [2, 3, 4, 5];
 </script>
@@ -39,6 +39,7 @@
 				on:click={() => {
 					$terms = [];
 					$form = 'SOP';
+					$termsType = 'MIN';
 				}}
 			>
 				SOP
@@ -51,6 +52,7 @@
 				on:click={() => {
 					$terms = [];
 					$form = 'POS';
+					$termsType = 'MAX';
 				}}
 			>
 				POS
@@ -59,11 +61,18 @@
 	</div>
 	<div class="flex flex-col border border-gray-700 text-center">
 		<div class="border-b border-gray-700 py-3 text-gray-400 text-md font-bold text-center uppercase tracking-wider">
-			{#if ($form === 'SOP')}
-				Min Terms
-			{:else}
-				Max Terms
-			{/if}
+			<div>
+				{$termsType === 'MIN'
+					? 'Min Terms'
+					: 'Max Terms'
+				}
+			</div>
+			<a
+				href="#/" class="text-sm text-gray-600 hover:text-gray-500 font-bold tracking-normal"
+				on:click|preventDefault={() => $termsType = $termsType === 'MIN' ? 'MAX' : 'MIN'}
+			>
+				Switch
+			</a>
 		</div>
 		<div class="flex justify-center">
 			<input
