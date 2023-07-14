@@ -130,6 +130,22 @@ const createGroups = (kMap, form) => {
 				}
 
 				let currentElements = [...currentGroup];
+				if (variablesCount >= 3 && currentElements.some((el) => (el.col === 0 || el.col === numCols - 1))) {
+					if (currentElements.every(({ row, col }) => kMapArr[row][numCols - 1 - col].value === desiredValue)) {
+						currentElements.forEach(({ row, col }) => {
+							currentGroup.push({ row: row, col: numCols - 1 - col, element: kMapArr[row][numCols - 1 - col]});
+						});
+					}
+				}
+
+				currentElements = [...currentGroup];
+				if (variablesCount >= 3 && currentElements.some((el) => (el.row === 0 || el.row === numRows - 1))) {
+					if (currentElements.every(({ row, col }) => kMapArr[numRows - 1 - row][col].value === desiredValue)) {
+						currentElements.forEach(({ row, col }) => {
+							currentGroup.push({ row: numRows - 1 - row, col: col, element: kMapArr[numRows - 1 - row][col] });
+						});
+					}
+				}
 
 				if (variablesCount >= 3 && currentElements.some((el) => (
 					(el.col === 0 && el.row === 0)

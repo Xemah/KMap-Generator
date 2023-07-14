@@ -9,19 +9,7 @@ const createTruthTable = (kMap, form) => {
 	const combinations = createCombinations(kMap.variables, form);
 
 	combinations.forEach((combination) => {
-		let element = null;
-
-		kMap.arr.forEach((row) => {
-			if (element) return;
-
-			row.forEach((el) => {
-				if (el.binary === combination.binary) {
-					element = el;
-					return;
-				}
-			});
-		});
-
+		const element = kMap.arr.flat().find((el) => el.binary === combination.binary);
 		truthTable.push(element);
 	});
 
