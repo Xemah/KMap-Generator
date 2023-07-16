@@ -1,7 +1,5 @@
 <script>
 	import { variablesCount, terms, termsType, form } from '@/lib/stores.js';
-
-	const possibleVariablesCount = [2, 3, 4, 5];
 </script>
 
 <div class="flex flex-col gap-8">
@@ -10,20 +8,35 @@
 			Variables
 		</div>
 		<div class="flex justify-center">
-			{#each possibleVariablesCount as n}
-				<button
-					class={
-						'inline-flex flex-1 items-center justify-center h-12 text-lg font-bold border-r last:border-r-0 border-gray-700 hover:bg-white/10'
-						+ ($variablesCount === n ? ' text-gray-200' : ' text-gray-400')
-					}
-					on:click={() => {
+			<button
+				class={
+					'inline-flex items-center justify-center w-14 h-12 text-gray-400 text-xl font-bold border-r border-gray-700 hover:bg-white/10'
+				}
+				on:click={() => {
+					if ($variablesCount > 2) {
 						$terms = [];
-						$variablesCount = n;
-					}}
-				>
-					{n}
-				</button>
-			{/each}
+						$variablesCount--;
+					}
+				}}
+			>
+				-
+			</button>
+			<div class="inline-flex flex-1 items-center justify-center h-12 flex-grow text-gray-400 text-lg font-bold text-center">
+				{$variablesCount}
+			</div>
+			<button
+				class={
+					'inline-flex  items-center justify-center w-14 h-12 text-gray-400 text-xl font-bold border-l last:border-r-0 border-gray-700 hover:bg-white/10'
+				}
+				on:click={() => {
+					if ($variablesCount < 6) {
+						$terms = [];
+						$variablesCount++;
+					}
+				}}
+			>
+				+
+			</button>
 		</div>
 	</div>
 	<div class="flex flex-col border border-gray-700 text-center">

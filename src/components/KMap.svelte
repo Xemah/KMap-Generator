@@ -8,9 +8,10 @@
 	let equation = '';
 
 	$: {
-		const variables = ['A', 'B', 'C', 'D', 'E', 'F'].slice(0, $variablesCount);
-		$kMap = createKMap(variables, $form, $terms, $termsType);
+		const variables = [...Array($variablesCount).keys()]
+			.map((i) => String.fromCharCode(i + 65));
 
+		$kMap = createKMap(variables, $form, $terms, $termsType);
 		groups = createGroups($kMap, $form);
 		equation = createEquation(groups, $form);
 
@@ -56,7 +57,7 @@
 			<div class="flex flex-col border border-gray-700">
 				{#each $kMap.arr as row}
 					<div class="flex border-b last:border-b-0 border-gray-700">
-						{#each row as { key, term, binary, value }}
+						{#each row as { key, term, value }}
 							<div
 								class={
 									'relative flex items-center justify-center w-20 h-20 border-r last:border-r-0 border-gray-700 text-lg text-gray-200 font-bold select-none cursor-pointer isolate'
