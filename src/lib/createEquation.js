@@ -7,21 +7,8 @@ const createEquation = (groups, form) => {
 		}
 
 		groups.forEach((elements) => {
-			let colEquationArr = [];
 			let rowEquationArr = [];
-
-			const colVars = Object.keys(elements[0].colVars);
-			colVars.forEach((v) => {
-				const val = elements[0].colVars[v];
-
-				if (elements.every((el) => el.colVars[v] === val)) {
-					if (form === 'SOP') {
-						colEquationArr.push(v + (val === 0 ? '\'' : ''));
-					} else {
-						colEquationArr.push(v + (val === 1 ? '\'' : ''));
-					}
-				}
-			});
+			let colEquationArr = [];
 
 			const rowVars = Object.keys(elements[0].rowVars);
 			rowVars.forEach((v) => {
@@ -36,9 +23,22 @@ const createEquation = (groups, form) => {
 				}
 			});
 
+			const colVars = Object.keys(elements[0].colVars);
+			colVars.forEach((v) => {
+				const val = elements[0].colVars[v];
+
+				if (elements.every((el) => el.colVars[v] === val)) {
+					if (form === 'SOP') {
+						colEquationArr.push(v + (val === 0 ? '\'' : ''));
+					} else {
+						colEquationArr.push(v + (val === 1 ? '\'' : ''));
+					}
+				}
+			});
+
 			const currentEquationArr = [
-				...colEquationArr,
 				...rowEquationArr,
+				...colEquationArr,
 			];
 
 			if (currentEquationArr.length > 0) {

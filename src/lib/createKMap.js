@@ -4,8 +4,8 @@ const createKMap = (variables, form, terms, termsType) => {
 	let kMapArr = [];
 
 	const variablesCount = variables.length;
-	const colVars = variables.slice(0, Math.ceil(variablesCount / 2));
-	const rowVars = variables.slice(colVars.length, colVars.length + Math.floor(variablesCount / 2));
+	const rowVars = variables.slice(0, Math.floor(variablesCount / 2));
+	const colVars = variables.slice(rowVars.length, rowVars.length + Math.ceil(variablesCount / 2));
 
 	let rowVarsCombinations = createCombinations(rowVars, form);
 	let colVarsCombinations = createCombinations(colVars, form);
@@ -19,16 +19,16 @@ const createKMap = (variables, form, terms, termsType) => {
 		kMapArr[i] = [];
 
 		for (let j = 0; j < numCols; j++) {
-			const key = colVarsCombinations[j].key
+			const key = rowVarsCombinations[i].key
 				+ (form === 'SOP' ? ' ' : ' + ')
-				+ rowVarsCombinations[i].key;
+				+ colVarsCombinations[j].key;
 
-			const binary = colVarsCombinations[j].binary
-				+ rowVarsCombinations[i].binary;
+			const binary = rowVarsCombinations[i].binary
+				+ colVarsCombinations[j].binary;
 
 			const vars = {
-				...colVarsCombinations[j].vars,
 				...rowVarsCombinations[i].vars,
+				...colVarsCombinations[j].vars,
 			};
 
 			const value = terms.includes(term)
@@ -41,8 +41,8 @@ const createKMap = (variables, form, terms, termsType) => {
 				binary,
 				value,
 				vars,
-				colVars: colVarsCombinations[j].vars,
 				rowVars: rowVarsCombinations[i].vars,
+				colVars: colVarsCombinations[j].vars,
 			};
 
 			term++;
@@ -59,8 +59,8 @@ const createKMap = (variables, form, terms, termsType) => {
 		variables,
 		colVars,
 		rowVars,
-		colVarsCombinations,
 		rowVarsCombinations,
+		colVarsCombinations,
 		arr: kMapArr,
 	};
 

@@ -33,10 +33,10 @@
 		<div class="flex text-gray-600 text-md font-medium">
 			<div class="relative w-12 h-12">
 				<div class="absolute bottom-0 right-[1px] w-full h-[1px] bg-gray-700 rotate-45 origin-bottom-right"></div>
-				<div class="absolute top-0 right-0">
+				<div class="absolute top-2 left-8">
 					{$kMap.colVars.join('')}
 				</div>
-				<div class="absolute bottom-0 left-0">
+				<div class="absolute bottom-0 right-6">
 					{$kMap.rowVars.join('')}
 				</div>
 			</div>
