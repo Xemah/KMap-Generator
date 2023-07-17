@@ -12,6 +12,7 @@
 			.map((i) => String.fromCharCode(i + 65));
 
 		$kMap = createKMap(variables, $form, $terms, $termsType);
+
 		groups = createGroups($kMap, $form);
 		equation = createEquation(groups, $form);
 
@@ -20,10 +21,13 @@
 			color: 'hsla(' + 360 / (i + 1) + ', 50%, 50%, 0.25)',
 			elements: group,
 		}));
+
+		equation = equation.replace(/([A-Z])'/g, '<span class="overline">$1</span>');
 	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- eslint-disable svelte/no-at-html-tags -->
 
 <div class={
 	'flex justify-center '
@@ -105,6 +109,6 @@
 		Equation
 	</div>
 	<div class="p-4 text-gray-300 text-xl">
-		{equation ?? '-'}
+		{@html equation ?? '-'}
 	</div>
 </div>
