@@ -2,8 +2,6 @@ const createGroups = (kMap, form) => {
 	const desiredValue = form === 'SOP' ? 1 : 0;
 
 	const kMapArr = kMap.arr;
-	const variablesCount = kMap.colVars.length + kMap.rowVars.length;
-
 	const numRows = kMapArr.length;
 	const numCols = kMapArr[0].length;
 

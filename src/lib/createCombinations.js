@@ -5,18 +5,16 @@ const createCombinations = (variables, form) => {
 	const combinations = [];
 
 	for (let i = 0; i < combinationsCount; i++) {
-		const vars = {};
+		const binary = i.toString(2).padStart(variablesCount, '0');
 
-		for (let j = 0; j < variablesCount; j++) {
-			vars[variables[j]] = Math.floor(i / Math.pow(2, variablesCount - 1 - j)) % 2;
+		const vars = {};
+		for (let j = 0; j < binary.length; j++) {
+			vars[variables[j]] = parseInt(binary[j]);
 		}
 
 		const key = Object.entries(vars)
 			.map(([v, val]) => v + (val === 0 ? '\'' : ''))
 			.join(form === 'SOP' ? ' ' : ' + ');
-
-		const binary = Object.values(vars)
-			.join('');
 
 		combinations.push({
 			key,
